@@ -13,12 +13,46 @@ define([
     'use strict';
 
     $.widget('infrangible.priceOptions', $.mage.priceOptions, {
+        _create: function() {
+            var form = this.element,
+                options = $(this.options.optionsSelector, form);
+
+            $.each(options, function() {
+                var role = $(this).attr('data-role');
+
+                if (! role) {
+                    $(this).attr('data-role', 'default');
+                }
+            });
+
+            this.options.optionHandlers.default = this.getDefaultHandler();
+
+            this._super();
+        },
+
+        _onOptionChanged: function(event) {
+            this._super(event);
+
+            var option = $(event.target);
+            var optionId = utils.findOptionId(option[0]);
+
+            option.trigger('product_option_changed', [optionId]);
+        },
+
+        getDefaultHandler: function getQtyHandler() {
+            var self = this;
+
+            return function (element, optionConfig) {
+                return self.getOptionValue(element, optionConfig);
+            };
+        },
+
         getOptionValue: function defaultGetOptionValue(element, optionsConfig) {
             var changes = {},
-                optionValue = element.val(),
                 optionId = utils.findOptionId(element[0]),
                 optionName = element.prop('name'),
                 optionType = element.prop('type'),
+                optionValue = element.val(),
                 optionConfig = optionsConfig[optionId],
                 optionHash = optionName;
 
@@ -59,6 +93,8 @@ define([
                     console.error('Unsupported option type: "' + optionType + '"');
                     break;
             }
+
+            element.trigger('product_option_changes', [optionId, optionHash, element, optionsConfig, changes]);
 
             return changes;
         }
