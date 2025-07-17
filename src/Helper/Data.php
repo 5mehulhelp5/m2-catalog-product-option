@@ -82,7 +82,7 @@ class Data
         //pass the return array encapsulated in an object for the other modules to be able to alter it eg: weee
         $this->eventManager->dispatch(
             'catalog_product_option_price_configuration_after',
-            ['configObj' => $configObj]
+            ['configObj' => $configObj, 'options' => $options]
         );
 
         return $configObj->getData('config');
