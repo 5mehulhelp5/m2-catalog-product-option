@@ -1,6 +1,6 @@
 /**
  * @author      Andreas Knollmann
- * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @copyright   Copyright (c) 2014-2026 Softwareentwicklung Andreas Knollmann
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
  */
 
@@ -39,7 +39,7 @@ define([
             option.trigger('product_option_changed', [optionId]);
         },
 
-        getDefaultHandler: function getQtyHandler() {
+        getDefaultHandler: function getDefaultHandler() {
             const self = this;
 
             return function (element, optionConfig) {
