@@ -12,7 +12,8 @@ define([
 ], function ($, _, utils) {
     'use strict';
 
-    $.widget('infrangible.priceOptions', $.mage.priceOptions, {
+    // $.widget() returns the constructor, which is $.infrangible.priceOptions
+    return $.widget('infrangible.priceOptions', $.mage.priceOptions, {
         _create: function() {
             const form = this.element,
                 options = $(this.options.optionsSelector, form);
@@ -99,6 +100,4 @@ define([
             return changes;
         }
     });
-
-    return $.infrangible.priceOptions;
 });
